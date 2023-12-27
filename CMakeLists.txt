@@ -4,5 +4,10 @@ project(Battleship_game)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 
+find_package(mongocxx)
+
 add_executable(server server.cpp mq.cpp)
 add_executable(client client.cpp mq.cpp)
+
+target_link_libraries(server mongocxx)
+target_link_libraries(client mongocxx)
