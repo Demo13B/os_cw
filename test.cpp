@@ -4,29 +4,21 @@
 #include "players.hpp"
 
 auto main() -> int {
-    std::vector<std::pair<int, int>> v({{0, 0}, {0, 1}, {5, 5}, {5, 6}});
-    Player p("Tim", 1, 0, v);
-    std::cout << p << std::endl;
-    p.anonymousPrint();
-    std::cout << std::endl;
+    std::string name;
+    std::cout << "Enter your nickname: ";
+    std::cin >> name;
 
-    int hit = p.hit({0, 0});
-    std::cout << p << std::endl;
-    std::cout << hit << std::endl;
+    std::vector<std::pair<int, int>> positions(20);
+    std::pair<int, int> coord;
+    std::cout << "Enter ship locations:\n";
 
-    hit = p.hit({0, 1});
-    std::cout << p << std::endl;
-    std::cout << hit << std::endl;
+    for (size_t i = 0; i != 20; ++i) {
+        std::cin >> positions[i].first >> positions[i].second;
+    }
 
-    hit = p.hit({5, 6});
-    std::cout << p << std::endl;
-    std::cout << hit << std::endl;
+    Player me(name, 1, 0, positions);
 
-    hit = p.hit({5, 5});
-    std::cout << p << std::endl;
-    std::cout << hit << std::endl;
+    std::string op = me.extract_field();
 
-    hit = p.hit({3, 9});
-    std::cout << p << std::endl;
-    std::cout << hit << std::endl;
+    std::cout << op;
 }

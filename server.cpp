@@ -22,6 +22,7 @@ auto main() -> int {
     }
 
     Player me(name, 1, 0, positions);
+    Player client;
 
     int option = 0;
     while (option != 3) {
@@ -55,6 +56,17 @@ auto main() -> int {
     sem_wait(server_sem);
 
     std::cout << "Client connected successfully" << std::endl;
+    std::cout << "Requesting client field...";
+    std::string op_field = mq.recieve();
+    client.update_field(op_field);
+    std::cout << "Received" << std::endl;
+
+    std::cout << "Sending server field to client...";
+    mq.send(me.extract_field());
+    std::cout << "Sent" << std::endl;
+
+    sem_post(client_sem);
+    sem_wait(server_sem);
 
     sem_unlink("server_sem");
     sem_unlink("client_sem");
