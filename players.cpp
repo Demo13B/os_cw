@@ -35,6 +35,10 @@ auto Player::hit(std::pair<int, int> pos) -> bool {
     }
 }
 
+auto Player::name() -> std::string {
+    return _name;
+}
+
 auto operator<<(std::ostream& os, const Player& p) -> std::ostream& {
     for (size_t i = 0; i != 10; ++i) {
         for (size_t j = 0; j != 10; ++j) {

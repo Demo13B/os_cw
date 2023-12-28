@@ -16,6 +16,7 @@ class Player {
 
     auto stats() -> std::pair<int, int>;
     auto hit(std::pair<int, int> position) -> bool;
+    auto name() -> std::string;
     friend auto operator<<(std::ostream& os, const Player& p) -> std::ostream&;
 };
 
