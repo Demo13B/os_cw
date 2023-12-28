@@ -9,9 +9,18 @@ auto main() -> int {
     MQ a = MQ("fromserver.dat", "toserver.dat");
 
     sem_wait(client_sem);
-    std::string res = a.recieve();
-    std::cout << res;
-    a.send("Acknowledged!");
+    std::string command = a.recieve();
+    std::string message;
+    while (command != "disconnect") {
+        std::cout << command << " your message: ";
+        std::cin >> message;
+        a.send(message);
+        sem_post(server_sem);
+        sem_wait(client_sem);
+        command = a.recieve();
+    }
+
+    a.send("disconnected");
     sem_post(server_sem);
 
     sem_unlink("server_sem");
