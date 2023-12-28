@@ -7,7 +7,7 @@ auto main() -> int {
     sem_t* client_sem = sem_open("client_sem", O_CREAT, 0777, 0);
     sem_t* server_sem = sem_open("server_sem", O_CREAT, 0777, 0);
 
-    MQ mq = MQ("toserver.dat", "fromserver.dat");
+    MQ mq = MQ("fromserver.dat", "toserver.dat");
 
     std::string name;
     std::cout << "Enter your nickname: ";
@@ -22,7 +22,7 @@ auto main() -> int {
     }
 
     Player me(name, 1, 0, positions);
-    Opponent op;
+    Player server;
 
     int option = 0;
     while (option != 3) {
@@ -54,7 +54,21 @@ auto main() -> int {
 
     sem_wait(client_sem);
 
-    std::cout << "Connection to server established successfully" << std::endl;
+    std::cout << "Connection to server established" << std::endl;
+    std::cout << "Sending player field data...";
+    mq.send(me.extract_field());
+    std::cout << "Sent" << std::endl;
+    std::cout << "Waiting for server field...";
+
+    sem_post(server_sem);
+    sem_wait(client_sem);
+
+    std::string op_field = mq.recieve();
+    server.update_field(op_field);
+    std::cout << "Received" << std::endl;
+
+    std::cout << me << std::endl;
+    std::cout << server << std::endl;
 
     sem_post(server_sem);
     sem_wait(client_sem);

@@ -1,41 +1,24 @@
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include "players.hpp"
 
 auto main() -> int {
-    std::vector<std::pair<int, int>> v({{1, 1}, {2, 2}});
-    Player p("Tim", 1, 0, v);
-    std::cout << p << std::endl;
+    std::string name;
+    std::cout << "Enter your nickname: ";
+    std::cin >> name;
 
-    std::pair<int, int> coord{1, 1};
-    bool cond = p.hit(coord);
-    if (cond) {
-        std::cout << "Hit!\n";
-    } else {
-        std::cout << "Miss!\n";
+    std::vector<std::pair<int, int>> positions(20);
+    std::pair<int, int> coord;
+    std::cout << "Enter ship locations:\n";
+
+    for (size_t i = 0; i != 20; ++i) {
+        std::cin >> positions[i].first >> positions[i].second;
     }
-    std::cout << p << std::endl;
 
-    coord.first = 0;
-    coord.second = 0;
-    cond = p.hit(coord);
-    if (cond) {
-        std::cout << "Hit!\n";
-    } else {
-        std::cout << "Miss!\n";
-    }
-    std::cout << p << std::endl;
+    Player me(name, 1, 0, positions);
 
-    Opponent op;
+    std::string op = me.extract_field();
 
-    std::cout << op << "\n";
-
-    std::pair<int, int> co{1, 1};
-    op.mark_hit(co);
-    std::cout << op << "\n";
-
-    co.first = 5;
-    co.second = 5;
-    op.mark_miss(co);
-    std::cout << op << "\n";
+    std::cout << op;
 }
