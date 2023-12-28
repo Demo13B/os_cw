@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include "players.hpp"
 
@@ -6,36 +7,18 @@ auto main() -> int {
     std::vector<std::pair<int, int>> v({{1, 1}, {2, 2}});
     Player p("Tim", 1, 0, v);
     std::cout << p << std::endl;
+    p.anonymousPrint();
+    std::cout << std::endl;
 
-    std::pair<int, int> coord{1, 1};
-    bool cond = p.hit(coord);
-    if (cond) {
-        std::cout << "Hit!\n";
-    } else {
-        std::cout << "Miss!\n";
-    }
+    std::cout << p.extract_field() << std::endl;
+
+    std::string s = "0 0 . 0 1 . 0 2 . 0 3 . 0 4 . 0 5 . 0 6 . 0 7 . 0 8 . 0 9 . 1 0 . 1 1 1 1 2 . 1 3 . 1 4 . 1 5 . 1 6 . 1 7 . 1 8 . 1 9 . 2 0 . 2 1 . 2 2 1 2 3 . 2 4 . 2 5 . 2 6 . 2 7 . 2 8 . 2 9 . 3 0 . 3 1 . 3 2 . 3 3 . 3 4 . 3 5 . 3 6 . 3 7 . 3 8 . 3 9 . 4 0 . 4 1 . 4 2 . 4 3 . 4 4 . 4 5 . 4 6 . 4 7 . 4 8 . 4 9 . 5 0 . 5 1 . 5 2 . 5 3 . 5 4 . 5 5 . 5 6 . 5 7 . 5 8 . 5 9 . 6 0 . 6 1 . 6 2 . 6 3 . 6 4 . 6 5 . 6 6 . 6 7 . 6 8 . 6 9 . 7 0 . 7 1 . 7 2 . 7 3 . 7 4 . 7 5 . 7 6 . 7 7 . 7 8 . 7 9 . 8 0 # 8 1 . 8 2 . 8 3 . 8 4 . 8 5 . 8 6 . 8 7 . 8 8 . 8 9 . 9 0 . 9 1 . 9 2 . 9 3 . 9 4 . 9 5 . 9 6 . 9 7 . 9 8 . 9 9 .";
+    p.update_field(s);
     std::cout << p << std::endl;
 
-    coord.first = 0;
-    coord.second = 0;
-    cond = p.hit(coord);
-    if (cond) {
-        std::cout << "Hit!\n";
-    } else {
-        std::cout << "Miss!\n";
-    }
-    std::cout << p << std::endl;
+    Player p2;
 
-    Opponent op;
-
-    std::cout << op << "\n";
-
-    std::pair<int, int> co{1, 1};
-    op.mark_hit(co);
-    std::cout << op << "\n";
-
-    co.first = 5;
-    co.second = 5;
-    op.mark_miss(co);
-    std::cout << op << "\n";
+    std::cout << p2 << std::endl;
+    p2.update_field(s);
+    std::cout << p2 << std::endl;
 }

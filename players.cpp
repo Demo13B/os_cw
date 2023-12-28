@@ -1,4 +1,6 @@
 #include "players.hpp"
+#include <iostream>
+#include <sstream>
 
 Player::Player(std::string name, int wins, int losses, std::vector<std::pair<int, int>> positions) {
     _name = name;
@@ -9,13 +11,28 @@ Player::Player(std::string name, int wins, int losses, std::vector<std::pair<int
     _field.resize(10);
 
     for (size_t i = 0; i != 10; ++i) {
-        for (size_t i = 0; i != 10; ++i) {
+        for (size_t j = 0; j != 10; ++j) {
             _field[i].push_back('.');
         }
     }
 
     for (std::pair<int, int> pos : positions) {
         _field[pos.first][pos.second] = '1';
+    }
+}
+
+Player::Player() {
+    _name = "";
+    _wins = 0;
+    _losses = 0;
+    _remainingSquares = 20;
+
+    _field.resize(10);
+
+    for (size_t i = 0; i != 10; ++i) {
+        for (size_t j = 0; j != 10; ++j) {
+            _field[i].push_back('.');
+        }
     }
 }
 
@@ -49,30 +66,40 @@ auto operator<<(std::ostream& os, const Player& p) -> std::ostream& {
     return os;
 }
 
-Opponent::Opponent() {
-    _field.resize(10);
-
-    for (size_t i = 0; i != 10; ++i) {
-        for (size_t i = 0; i != 10; ++i) {
-            _field[i].push_back('.');
-        }
-    }
-}
-
-auto Opponent::mark_hit(std::pair<int, int> coord) -> void {
-    _field[coord.first][coord.second] = 'X';
-}
-
-auto Opponent::mark_miss(std::pair<int, int> coord) -> void {
-    _field[coord.first][coord.second] = '#';
-}
-
-auto operator<<(std::ostream& os, const Opponent& op) -> std::ostream& {
+auto Player::anonymousPrint() -> void {
     for (size_t i = 0; i != 10; ++i) {
         for (size_t j = 0; j != 10; ++j) {
-            os << op._field[i][j] << " ";
+            if (_field[i][j] == '1') {
+                std::cout << "."
+                          << " ";
+            } else {
+                std::cout << _field[i][j] << " ";
+            }
         }
-        os << "\n";
+        std::cout << "\n";
     }
-    return os;
+}
+
+auto Player::update_field(std::string data) -> void {
+    std::stringstream ss;
+    ss << data;
+
+    for (size_t i = 0; i != 100; ++i) {
+        int row, column;
+        char symbol;
+        ss >> row >> column >> symbol;
+        _field[row][column] = symbol;
+    }
+}
+
+auto Player::extract_field() -> std::string {
+    std::stringstream ss;
+
+    for (size_t i = 0; i != 10; ++i) {
+        for (size_t j = 0; j != 10; ++j) {
+            ss << i << " " << j << " " << _field[i][j] << " ";
+        }
+    }
+
+    return ss.str();
 }

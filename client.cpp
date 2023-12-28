@@ -22,7 +22,6 @@ auto main() -> int {
     }
 
     Player me(name, 1, 0, positions);
-    Opponent op;
 
     int option = 0;
     while (option != 3) {
