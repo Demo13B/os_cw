@@ -19,12 +19,15 @@ class Player {
     friend auto operator<<(std::ostream& os, const Player& p) -> std::ostream&;
 };
 
-inline auto operator<<(std::ostream& os, const Player& p) -> std::ostream& {
-    for (size_t i = 0; i != 10; ++i) {
-        for (size_t j = 0; j != 10; ++j) {
-            os << p._field[i][j] << " ";
-        }
-        os << "\n";
-    }
-    return os;
-}
+class Opponent {
+   private:
+    std::vector<std::vector<char>> _field;
+
+   public:
+    Opponent();
+    ~Opponent() = default;
+
+    auto mark_hit(std::pair<int, int> coord) -> void;
+    auto mark_miss(std::pair<int, int> coord) -> void;
+    friend auto operator<<(std::ostream& os, const Opponent& op) -> std::ostream&;
+};
