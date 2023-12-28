@@ -10,8 +10,23 @@ auto main() -> int {
     p.anonymousPrint();
     std::cout << std::endl;
 
-    p.hit({0, 0});
+    int hit = p.hit({0, 0});
     std::cout << p << std::endl;
-    p.hit({0, 1});
+    std::cout << hit << std::endl;
+
+    hit = p.hit({0, 1});
     std::cout << p << std::endl;
+    std::cout << hit << std::endl;
+
+    hit = p.hit({5, 6});
+    std::cout << p << std::endl;
+    std::cout << hit << std::endl;
+
+    hit = p.hit({5, 5});
+    std::cout << p << std::endl;
+    std::cout << hit << std::endl;
+
+    hit = p.hit({3, 9});
+    std::cout << p << std::endl;
+    std::cout << hit << std::endl;
 }

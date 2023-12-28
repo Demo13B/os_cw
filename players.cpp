@@ -112,22 +112,6 @@ auto Player::hit(std::pair<int, int> pos) -> bool {
             return true;
         }
 
-        if (left && _field[left_row][left_column] == '1') {
-            return true;
-        }
-
-        if (up && _field[up_row][up_column] == '1') {
-            return true;
-        }
-
-        if (right && _field[right_row][right_column] == '1') {
-            return true;
-        }
-
-        if (bottom && _field[bottom_row][bottom_column] == '1') {
-            return true;
-        }
-
         if (_field[left_row][left_column] == 'X' || _field[right_row][right_column] == 'X') {
             std::vector<std::pair<int, int>> toFill;
             while (left_column >= 0 && _field[left_row][left_column] == 'X') {
@@ -194,6 +178,10 @@ auto Player::hit(std::pair<int, int> pos) -> bool {
 
 auto Player::name() -> std::string {
     return _name;
+}
+
+auto Player::remainingSquares() -> int {
+    return _remainingSquares;
 }
 
 auto operator<<(std::ostream& os, const Player& p) -> std::ostream& {
