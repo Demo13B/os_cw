@@ -41,12 +41,24 @@ auto main() -> int {
             case 1:
                 std::cout << "Name: " << me.name() << " Wins: " << stats.first << " Losses: " << stats.second << std::endl;
                 break;
+
             case 2:
                 std::cout << me << std::endl;
                 break;
+
             case 3:
-                std::cout << "Waiting for server response" << std::endl;
+                std::cout << "Waiting for server response..." << std::endl;
                 break;
         }
     }
+
+    sem_wait(client_sem);
+
+    std::cout << "Connection to server established successfully" << std::endl;
+
+    sem_post(server_sem);
+    sem_wait(client_sem);
+
+    sem_unlink("server_sem");
+    sem_unlink("client_sem");
 }
