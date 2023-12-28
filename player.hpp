@@ -11,7 +11,7 @@ class Player {
     std::vector<std::vector<char>> _field;
 
    public:
-    Player(std::string name, int wins, int losses);
+    Player(std::string name, int wins, int losses, std::vector<std::pair<int, int>> positions);
     ~Player() = default;
 
     auto stats() -> std::pair<int, int>;
@@ -22,7 +22,7 @@ class Player {
 inline auto operator<<(std::ostream& os, const Player& p) -> std::ostream& {
     for (size_t i = 0; i != 10; ++i) {
         for (size_t j = 0; j != 10; ++j) {
-            os << p._field[i][j];
+            os << p._field[i][j] << " ";
         }
         os << "\n";
     }

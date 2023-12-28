@@ -1,6 +1,6 @@
 #include "player.hpp"
 
-Player::Player(std::string name, int wins, int losses) {
+Player::Player(std::string name, int wins, int losses, std::vector<std::pair<int, int>> positions) {
     _name = name;
     _wins = wins;
     _losses = losses;
@@ -10,8 +10,12 @@ Player::Player(std::string name, int wins, int losses) {
 
     for (size_t i = 0; i != 10; ++i) {
         for (size_t i = 0; i != 10; ++i) {
-            _field[i].push_back('0');
+            _field[i].push_back('.');
         }
+    }
+
+    for (std::pair<int, int> pos : positions) {
+        _field[pos.first][pos.second] = '1';
     }
 }
 
@@ -21,10 +25,11 @@ auto Player::stats() -> std::pair<int, int> {
 }
 
 auto Player::hit(std::pair<int, int> pos) -> bool {
-    if (_field[pos.first][pos.second] == '0') {
+    if (_field[pos.first][pos.second] == '.') {
+        _field[pos.first][pos.second] = '#';
         return false;
     } else {
-        _field[pos.first][pos.second] = '#';
+        _field[pos.first][pos.second] = 'X';
         _remainingSquares--;
         return true;
     }
