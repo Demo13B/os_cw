@@ -1,5 +1,6 @@
 #include <semaphore.h>
 #include <iostream>
+#include <sstream>
 #include "mq.hpp"
 #include "players.hpp"
 
@@ -79,6 +80,122 @@ auto main() -> int {
 
     sem_post(server_sem);
     sem_wait(client_sem);
+
+    std::string command = mq.recieve();
+
+    while (true) {
+        if (command == "Op_hit") {
+            std::cout << "Opponent's turn" << std::endl;
+            std::string coord_str = mq.recieve();
+            std::stringstream coord_stream;
+            coord_stream << coord_str;
+            std::pair<int, int> coord;
+            coord_stream >> coord.first >> coord.second;
+
+            std::cout << "Your ship has been hit at " << coord.first << " " << coord.second << std::endl;
+            std::string upd = mq.recieve();
+            me.update_field(upd);
+
+            std::cout << "Your field: " << std::endl;
+            std::cout << me << std::endl;
+            std::cout << "Opponent's field: " << std::endl;
+            server.anonymousPrint();
+            std::cout << std::endl;
+
+            sem_post(server_sem);
+            sem_wait(client_sem);
+
+            command = mq.recieve();
+        } else if (command == "Op_miss") {
+            std::cout << "Opponent's turn" << std::endl;
+            std::string coord_str = mq.recieve();
+            std::stringstream coord_stream;
+            coord_stream << coord_str;
+            std::pair<int, int> coord;
+            coord_stream >> coord.first >> coord.second;
+
+            std::cout << "Opponent missed at " << coord.first << " " << coord.second << std::endl;
+            std::string upd = mq.recieve();
+            me.update_field(upd);
+
+            std::cout << "Your field: " << std::endl;
+            std::cout << me << std::endl;
+            std::cout << "Opponent's field: " << std::endl;
+            server.anonymousPrint();
+            std::cout << std::endl;
+
+            sem_post(server_sem);
+            sem_wait(client_sem);
+
+            command = mq.recieve();
+        } else if (command == "Try") {
+            std::pair<int, int> coord;
+            std::cout << "It's your turn" << std::endl;
+            std::cout << "Enter hit coordinates: ";
+            std::cin >> coord.first >> coord.second;
+            std::stringstream coord_stream;
+            coord_stream << coord.first << " " << coord.second;
+
+            mq.send(coord_stream.str());
+
+            sem_post(server_sem);
+            sem_wait(client_sem);
+
+            command = mq.recieve();
+        } else if (command == "You_hit") {
+            std::string coord_str = mq.recieve();
+            std::stringstream coord_stream;
+            coord_stream << coord_str;
+            std::pair<int, int> coord;
+            coord_stream >> coord.first >> coord.second;
+
+            std::cout << "You hit opponent's ship at " << coord.first << " " << coord.second << std::endl;
+            std::string upd = mq.recieve();
+            server.update_field(upd);
+
+            std::cout << "Your field: " << std::endl;
+            std::cout << me << std::endl;
+            std::cout << "Opponent's field: " << std::endl;
+            server.anonymousPrint();
+            std::cout << std::endl;
+
+            sem_post(server_sem);
+            sem_wait(client_sem);
+
+            command = mq.recieve();
+        } else if (command == "You_miss") {
+            std::string coord_str = mq.recieve();
+            std::stringstream coord_stream;
+            coord_stream << coord_str;
+            std::pair<int, int> coord;
+            coord_stream >> coord.first >> coord.second;
+
+            std::cout << "You missed at " << coord.first << " " << coord.second << std::endl;
+            std::string upd = mq.recieve();
+            server.update_field(upd);
+
+            std::cout << "Your field: " << std::endl;
+            std::cout << me << std::endl;
+            std::cout << "Opponent's field: " << std::endl;
+            server.anonymousPrint();
+            std::cout << std::endl;
+
+            sem_post(server_sem);
+            sem_wait(client_sem);
+
+            command = mq.recieve();
+        } else if (command == "Win") {
+            std::cout << "=================" << std::endl;
+            std::cout << "You won!" << std::endl;
+            std::cout << "=================" << std::endl;
+            break;
+        } else if (command == "Loss") {
+            std::cout << "=================" << std::endl;
+            std::cout << "You lost!" << std::endl;
+            std::cout << "=================" << std::endl;
+            break;
+        }
+    }
 
     sem_unlink("server_sem");
     sem_unlink("client_sem");
