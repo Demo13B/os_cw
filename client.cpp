@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include "mq.hpp"
-#include "players.hpp"
+#include "player.hpp"
 
 auto main() -> int {
     sem_t* client_sem = sem_open("client_sem", O_CREAT, 0777, 0);

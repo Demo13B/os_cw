@@ -3,24 +3,22 @@
 #include <map>
 
 Db::Db(std::string fileName) {
-    _file.open(fileName);
-}
+    _fileName = fileName;
+    std::fstream file(_fileName);
 
-auto Db::extractData() -> void {
     std::string name;
     std::pair<int, int> stats;
-    _file >> name >> stats.first >> stats.second;
 
-    while (name != "") {
+    while (file.peek() != EOF) {
+        file >> name >> stats.first >> stats.second;
         _data[name] = stats;
-        _file >> name >> stats.first >> stats.second;
     }
 }
 
-auto Db::putData() -> void {
+Db::~Db() {
+    std::fstream file(_fileName);
     for (const auto& [key, value] : _data) {
-        _file.seekp(0);
-        _file << key << " " << value.first << " " << value.second << "\n";
+        file << key << " " << value.first << " " << value.second << "\n";
     }
 }
 

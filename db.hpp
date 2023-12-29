@@ -1,18 +1,16 @@
 #pragma once
-#include <fstream>
 #include <map>
+#include <string>
 
 class Db {
    private:
-    std::fstream _file;
+    std::string _fileName;
     std::map<std::string, std::pair<int, int>> _data;
 
    public:
     Db(std::string fileName);
-    ~Db() = default;
+    ~Db();
 
-    auto extractData() -> void;
-    auto putData() -> void;
     auto findEntry(std::string name) -> std::pair<int, int>;
     auto updateEntry(std::string name, std::pair<int, int> stats) -> void;
 };
