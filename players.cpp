@@ -101,73 +101,49 @@ auto Player::hit(std::pair<int, int> pos) -> bool {
             bottom = true;
         }
 
-        if ((left && _field[left_row][left_column] == '.') &&
-            (up && _field[up_row][up_column] == '.') &&
-            (right && _field[right_row][right_column] == '.') &&
-            (bottom && _field[bottom_row][bottom_column] == '.')) {
-            _field[left_row][left_column] = '#';
-            _field[up_row][up_column] = '#';
-            _field[right_row][right_column] = '#';
-            _field[bottom_row][bottom_column] = '#';
-            return true;
+        std::vector<std::pair<int, int>> toFill;
+        while (left_column >= 0 && _field[left_row][left_column] == 'X') {
+            left_column -= 1;
         }
 
-        if (_field[left_row][left_column] == 'X' || _field[right_row][right_column] == 'X') {
-            std::vector<std::pair<int, int>> toFill;
-            while (left_column >= 0 && _field[left_row][left_column] == 'X') {
-                left_column -= 1;
-            }
-
-            if (left_column >= 0 && _field[left_row][left_column] == '1') {
-                return true;
-            } else if (left_column >= 0 && _field[left_row][left_column] == '.') {
-                toFill.push_back({left_row, left_column});
-            }
-
-            while (right_column <= 9 && _field[right_row][right_column] == 'X') {
-                right_column += 1;
-            }
-
-            if (right_column <= 9 && _field[right_row][right_column] == '1') {
-                return true;
-            } else if (right_column <= 9 && _field[right_row][right_column] == '.') {
-                toFill.push_back({right_row, right_column});
-            }
-
-            for (std::pair<int, int> point : toFill) {
-                _field[point.first][point.second] = '#';
-            }
-
+        if (left_column >= 0 && _field[left_row][left_column] == '1') {
             return true;
+        } else if (left_column >= 0 && _field[left_row][left_column] == '.') {
+            toFill.push_back({left_row, left_column});
         }
 
-        if ((up && _field[up_row][up_column] == 'X') || (bottom && _field[bottom_row][bottom_column] == 'X')) {
-            std::vector<std::pair<int, int>> toFill;
-            while (up_row >= 0 && _field[up_row][up_column] == 'X') {
-                up_row -= 1;
-            }
+        while (right_column <= 9 && _field[right_row][right_column] == 'X') {
+            right_column += 1;
+        }
 
-            if (up_row >= 0 && _field[up_row][up_column] == '1') {
-                return true;
-            } else if (up_row >= 0 && _field[up_row][up_column] == '.') {
-                toFill.push_back({up_row, up_column});
-            }
-
-            while (bottom_row <= 9 && _field[bottom_row][bottom_column] == 'X') {
-                bottom_row += 1;
-            }
-
-            if (bottom_row <= 9 && _field[bottom_row][bottom_column] == '1') {
-                return true;
-            } else if (bottom_row <= 9 && _field[bottom_row][bottom_column] == '.') {
-                toFill.push_back({bottom_row, bottom_column});
-            }
-
-            for (std::pair<int, int> point : toFill) {
-                _field[point.first][point.second] = '#';
-            }
-
+        if (right_column <= 9 && _field[right_row][right_column] == '1') {
             return true;
+        } else if (right_column <= 9 && _field[right_row][right_column] == '.') {
+            toFill.push_back({right_row, right_column});
+        }
+
+        while (up_row >= 0 && _field[up_row][up_column] == 'X') {
+            up_row -= 1;
+        }
+
+        if (up_row >= 0 && _field[up_row][up_column] == '1') {
+            return true;
+        } else if (up_row >= 0 && _field[up_row][up_column] == '.') {
+            toFill.push_back({up_row, up_column});
+        }
+
+        while (bottom_row <= 9 && _field[bottom_row][bottom_column] == 'X') {
+            bottom_row += 1;
+        }
+
+        if (bottom_row <= 9 && _field[bottom_row][bottom_column] == '1') {
+            return true;
+        } else if (bottom_row <= 9 && _field[bottom_row][bottom_column] == '.') {
+            toFill.push_back({bottom_row, bottom_column});
+        }
+
+        for (std::pair<int, int> point : toFill) {
+            _field[point.first][point.second] = '#';
         }
 
         return true;

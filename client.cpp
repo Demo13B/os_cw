@@ -92,7 +92,7 @@ auto main() -> int {
             std::pair<int, int> coord;
             coord_stream >> coord.first >> coord.second;
 
-            std::cout << "Your ship has been hit at " << coord.first << " " << coord.second << std::endl;
+            std::cout << "Opponent hit at " << coord.first << " " << coord.second << std::endl;
             std::string upd = mq.recieve();
             me.update_field(upd);
 
@@ -149,7 +149,7 @@ auto main() -> int {
             std::pair<int, int> coord;
             coord_stream >> coord.first >> coord.second;
 
-            std::cout << "You hit opponent's ship at " << coord.first << " " << coord.second << std::endl;
+            std::cout << "You hit at " << coord.first << " " << coord.second << std::endl;
             std::string upd = mq.recieve();
             server.update_field(upd);
 
@@ -170,7 +170,7 @@ auto main() -> int {
             std::pair<int, int> coord;
             coord_stream >> coord.first >> coord.second;
 
-            std::cout << "You missed at " << coord.first << " " << coord.second << std::endl;
+            std::cout << "You miss at " << coord.first << " " << coord.second << std::endl;
             std::string upd = mq.recieve();
             server.update_field(upd);
 

@@ -94,7 +94,7 @@ auto main() -> int {
             bool hit = client.hit(coord);
 
             if (hit) {
-                std::cout << "Hit at " << coord.first << " " << coord.second << std::endl;
+                std::cout << "You hit at " << coord.first << " " << coord.second << std::endl;
                 std::cout << "Your field: " << std::endl;
                 std::cout << me << std::endl;
                 std::cout << "Opponent field:" << std::endl;
@@ -121,7 +121,7 @@ auto main() -> int {
                     break;
                 }
             } else {
-                std::cout << "Miss at " << coord.first << " " << coord.second << std::endl;
+                std::cout << "You miss at " << coord.first << " " << coord.second << std::endl;
                 std::cout << "Your field: " << std::endl;
                 std::cout << me << std::endl;
                 std::cout << "Opponent field:" << std::endl;
