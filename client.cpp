@@ -85,7 +85,6 @@ auto main() -> int {
 
     while (true) {
         if (command == "Op_hit") {
-            std::cout << "Opponent's turn" << std::endl;
             std::string coord_str = mq.recieve();
             std::stringstream coord_stream;
             coord_stream << coord_str;
@@ -102,12 +101,15 @@ auto main() -> int {
             server.anonymousPrint();
             std::cout << std::endl;
 
+            std::cout << "============================" << std::endl;
+            std::cout << "It's opponent's turn" << std::endl;
+            std::cout << "============================" << std::endl;
+
             sem_post(server_sem);
             sem_wait(client_sem);
 
             command = mq.recieve();
         } else if (command == "Op_miss") {
-            std::cout << "Opponent's turn" << std::endl;
             std::string coord_str = mq.recieve();
             std::stringstream coord_stream;
             coord_stream << coord_str;
@@ -130,9 +132,11 @@ auto main() -> int {
             command = mq.recieve();
         } else if (command == "Try") {
             std::pair<int, int> coord;
+            std::cout << "============================" << std::endl;
             std::cout << "It's your turn" << std::endl;
             std::cout << "Enter hit coordinates: ";
             std::cin >> coord.first >> coord.second;
+            std::cout << "============================" << std::endl;
             std::stringstream coord_stream;
             coord_stream << coord.first << " " << coord.second;
 
@@ -179,6 +183,10 @@ auto main() -> int {
             std::cout << "Opponent's field: " << std::endl;
             server.anonymousPrint();
             std::cout << std::endl;
+
+            std::cout << "============================" << std::endl;
+            std::cout << "It's opponent's turn" << std::endl;
+            std::cout << "============================" << std::endl;
 
             sem_post(server_sem);
             sem_wait(client_sem);

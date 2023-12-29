@@ -87,9 +87,11 @@ auto main() -> int {
     while (true) {
         if (myTurn) {
             std::pair<int, int> coord;
+            std::cout << "============================" << std::endl;
             std::cout << "It's your turn" << std::endl;
             std::cout << "Enter hit coordinates: ";
             std::cin >> coord.first >> coord.second;
+            std::cout << "============================" << std::endl;
 
             bool hit = client.hit(coord);
 
@@ -139,7 +141,9 @@ auto main() -> int {
                 sem_wait(server_sem);
             }
         } else {
+            std::cout << "============================" << std::endl;
             std::cout << "It's opponent's turn" << std::endl;
+            std::cout << "============================" << std::endl;
             mq.send("Try");
 
             sem_post(client_sem);

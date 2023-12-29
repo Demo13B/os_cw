@@ -17,7 +17,7 @@ Player::Player(std::string name, int wins, int losses, std::vector<std::pair<int
     }
 
     for (std::pair<int, int> pos : positions) {
-        _field[pos.first][pos.second] = '1';
+        _field[pos.first][pos.second] = 'O';
     }
 }
 
@@ -45,7 +45,7 @@ auto Player::hit(std::pair<int, int> pos) -> bool {
     if (_field[pos.first][pos.second] == '.') {
         _field[pos.first][pos.second] = '#';
         return false;
-    } else if (_field[pos.first][pos.second] == '1') {
+    } else if (_field[pos.first][pos.second] == 'O') {
         _remainingSquares--;
         _field[pos.first][pos.second] = 'X';
 
@@ -106,7 +106,7 @@ auto Player::hit(std::pair<int, int> pos) -> bool {
             left_column -= 1;
         }
 
-        if (left_column >= 0 && _field[left_row][left_column] == '1') {
+        if (left_column >= 0 && _field[left_row][left_column] == 'O') {
             return true;
         } else if (left_column >= 0 && _field[left_row][left_column] == '.') {
             toFill.push_back({left_row, left_column});
@@ -116,7 +116,7 @@ auto Player::hit(std::pair<int, int> pos) -> bool {
             right_column += 1;
         }
 
-        if (right_column <= 9 && _field[right_row][right_column] == '1') {
+        if (right_column <= 9 && _field[right_row][right_column] == 'O') {
             return true;
         } else if (right_column <= 9 && _field[right_row][right_column] == '.') {
             toFill.push_back({right_row, right_column});
@@ -126,7 +126,7 @@ auto Player::hit(std::pair<int, int> pos) -> bool {
             up_row -= 1;
         }
 
-        if (up_row >= 0 && _field[up_row][up_column] == '1') {
+        if (up_row >= 0 && _field[up_row][up_column] == 'O') {
             return true;
         } else if (up_row >= 0 && _field[up_row][up_column] == '.') {
             toFill.push_back({up_row, up_column});
@@ -136,7 +136,7 @@ auto Player::hit(std::pair<int, int> pos) -> bool {
             bottom_row += 1;
         }
 
-        if (bottom_row <= 9 && _field[bottom_row][bottom_column] == '1') {
+        if (bottom_row <= 9 && _field[bottom_row][bottom_column] == 'O') {
             return true;
         } else if (bottom_row <= 9 && _field[bottom_row][bottom_column] == '.') {
             toFill.push_back({bottom_row, bottom_column});
@@ -173,7 +173,7 @@ auto operator<<(std::ostream& os, const Player& p) -> std::ostream& {
 auto Player::anonymousPrint() -> void {
     for (size_t i = 0; i != 10; ++i) {
         for (size_t j = 0; j != 10; ++j) {
-            if (_field[i][j] == '1') {
+            if (_field[i][j] == 'O') {
                 std::cout << "."
                           << " ";
             } else {
