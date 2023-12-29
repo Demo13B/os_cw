@@ -1,6 +1,7 @@
 #include <semaphore.h>
 #include <iostream>
 #include <sstream>
+#include "db.hpp"
 #include "mq.hpp"
 #include "player.hpp"
 
@@ -9,10 +10,12 @@ auto main() -> int {
     sem_t* server_sem = sem_open("server_sem", O_CREAT, 0777, 0);
 
     MQ mq = MQ("fromserver.dat", "toserver.dat");
+    Db db = Db("../database.dat");
 
     std::string name;
     std::cout << "Enter your nickname: ";
     std::cin >> name;
+    std::pair<int, int> stats = db.findEntry(name);
 
     std::vector<std::pair<int, int>> positions(20);
     std::pair<int, int> coord;
@@ -22,7 +25,7 @@ auto main() -> int {
         std::cin >> positions[i].first >> positions[i].second;
     }
 
-    Player me(name, 1, 0, positions);
+    Player me(name, stats.first, stats.second, positions);
     Player server;
 
     int option = 0;

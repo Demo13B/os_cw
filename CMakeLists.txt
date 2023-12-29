@@ -8,5 +8,18 @@ add_executable(server_test server_test.cpp mq.cpp)
 add_executable(client_test client_test.cpp mq.cpp)
 add_executable(test test.cpp player.cpp db.cpp)
 
-add_executable(server server.cpp mq.cpp player.cpp)
-add_executable(client client.cpp mq.cpp player.cpp)
+add_executable(
+    server 
+    server.cpp 
+    mq.cpp 
+    player.cpp 
+    db.cpp
+)
+
+add_executable(
+    client 
+    client.cpp 
+    mq.cpp 
+    player.cpp 
+    db.cpp
+)
