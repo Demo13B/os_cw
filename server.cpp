@@ -68,6 +68,21 @@ auto main() -> int {
     sem_post(client_sem);
     sem_wait(server_sem);
 
+    std::cout << "Flipping coin...";
+    bool myTurn = coinflip();
+    std::cout << "Flipped" << std::endl;
+
+    if (myTurn) {
+        mq.send("No");
+        std::cout << "You go first" << std::endl;
+    } else {
+        mq.send("Yes");
+        std::cout << "Opponent goes first" << std::endl;
+    }
+
+    sem_post(client_sem);
+    sem_wait(server_sem);
+
     sem_unlink("server_sem");
     sem_unlink("client_sem");
 }

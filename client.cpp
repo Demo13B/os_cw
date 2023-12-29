@@ -67,8 +67,15 @@ auto main() -> int {
     server.update_field(op_field);
     std::cout << "Received" << std::endl;
 
-    std::cout << me << std::endl;
-    std::cout << server << std::endl;
+    sem_post(server_sem);
+    sem_wait(client_sem);
+
+    std::string turn = mq.recieve();
+    if (turn == "No") {
+        std::cout << "Coin flipped, opponnent goes first" << std::endl;
+    } else if (turn == "Yes") {
+        std::cout << "Coin flipped, you go first" << std::endl;
+    }
 
     sem_post(server_sem);
     sem_wait(client_sem);
