@@ -9,8 +9,9 @@ class Db {
 
    public:
     Db(std::string fileName);
-    ~Db();
+    ~Db() = default;
 
     auto findEntry(std::string name) -> std::pair<int, int>;
     auto updateEntry(std::string name, std::pair<int, int> stats) -> void;
+    auto syncData() -> void;
 };

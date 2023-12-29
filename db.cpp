@@ -4,7 +4,7 @@
 
 Db::Db(std::string fileName) {
     _fileName = fileName;
-    std::fstream file(_fileName);
+    std::fstream file(_fileName, std::ios::in);
 
     std::string name;
     std::pair<int, int> stats;
@@ -13,13 +13,8 @@ Db::Db(std::string fileName) {
         file >> name >> stats.first >> stats.second;
         _data[name] = stats;
     }
-}
 
-Db::~Db() {
-    std::fstream file(_fileName);
-    for (const auto& [key, value] : _data) {
-        file << key << " " << value.first << " " << value.second << "\n";
-    }
+    file.close();
 }
 
 auto Db::findEntry(std::string name) -> std::pair<int, int> {
@@ -38,4 +33,12 @@ auto Db::findEntry(std::string name) -> std::pair<int, int> {
 
 auto Db::updateEntry(std::string name, std::pair<int, int> stats) -> void {
     _data[name] = stats;
+}
+
+auto Db::syncData() -> void {
+    std::fstream file(_fileName, std::ios::out);
+    for (const auto& [key, value] : _data) {
+        file << key << " " << value.first << " " << value.second << "\n";
+    }
+    file.close();
 }

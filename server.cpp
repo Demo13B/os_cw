@@ -60,7 +60,15 @@ auto main() -> int {
     sem_wait(server_sem);
 
     std::cout << "Client connected successfully" << std::endl;
-    std::cout << "Requesting client field...";
+    std::cout << "Requesting client data...";
+
+    std::string clientdata = mq.recieve();
+    std::stringstream clientdataStream;
+    clientdataStream << clientdata;
+    std::string op_name;
+    std::pair<int, int> op_stats;
+    clientdataStream >> op_name >> op_stats.first >> op_stats.second;
+
     std::string op_field = mq.recieve();
     client.update_field(op_field);
     std::cout << "Received" << std::endl;
@@ -117,6 +125,10 @@ auto main() -> int {
 
                 if (client.remainingSquares() == 0) {
                     mq.send("Loss");
+
+                    db.updateEntry(me.name(), {me.stats().first + 1, me.stats().second});
+                    db.updateEntry(op_name, {op_stats.first, op_stats.second + 1});
+                    db.syncData();
 
                     sem_post(client_sem);
 
@@ -179,6 +191,10 @@ auto main() -> int {
 
                 if (me.remainingSquares() == 0) {
                     mq.send("Win");
+
+                    db.updateEntry(me.name(), {me.stats().first, me.stats().second + 1});
+                    db.updateEntry(op_name, {op_stats.first + 1, op_stats.second});
+                    db.syncData();
 
                     sem_post(client_sem);
 

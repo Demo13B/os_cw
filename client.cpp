@@ -60,6 +60,11 @@ auto main() -> int {
 
     std::cout << "Connection to server established" << std::endl;
     std::cout << "Sending player field data...";
+
+    std::stringstream clientdata;
+    clientdata << me.name() << " " << me.stats().first << " " << me.stats().second;
+    mq.send(clientdata.str());
+
     mq.send(me.extract_field());
     std::cout << "Sent" << std::endl;
     std::cout << "Waiting for server field...";
