@@ -1,31 +1,27 @@
+#include <fstream>
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <vector>
 #include "players.hpp"
 
 auto main() -> int {
-    std::string name;
-    std::cout << "Enter your nickname: ";
-    std::cin >> name;
+    std::fstream file("../database.txt");
 
-    std::vector<std::pair<int, int>> positions(20);
-    std::pair<int, int> coord;
-    std::cout << "Enter ship locations:\n";
+    std::string name1, name2;
+    int a1, b1, a2, b2;
+    file >> name1 >> a1 >> b1;
+    file >> name2 >> a2 >> b2;
 
-    for (size_t i = 0; i != 20; ++i) {
-        std::cin >> positions[i].first >> positions[i].second;
-    }
+    std::cout << name1 << std::endl
+              << a1 + b1 << std::endl;
 
-    Player me(name, 1, 0, positions);
+    std::cout << name2 << std::endl
+              << a2 + b2 << std::endl;
 
-    me.hit({2, 1});
-    std::cout << me << std::endl;
-    me.hit({4, 1});
-    std::cout << me << std::endl;
-    me.hit({3, 1});
-    std::cout << me << std::endl;
-    me.hit({5, 4});
-    std::cout << me << std::endl;
-    me.hit({5, 3});
-    std::cout << me << std::endl;
+    std::map<std::string, std::pair<int, int>> memory;
+    memory[name1] = {a1, b1};
+    memory[name2] = {a2, b2};
+
+    std::cout << memory[name1].first << " " << memory[name1].second << std::endl;
 }
