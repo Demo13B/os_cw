@@ -231,3 +231,8 @@ auto Player::extract_field() -> std::string {
 
     return ss.str();
 }
+
+auto coinflip() -> bool {
+    srand(time(0));
+    return rand() % 2;
+}

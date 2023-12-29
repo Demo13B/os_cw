@@ -25,3 +25,5 @@ class Player {
     auto update_field(std::string data) -> void;
     auto extract_field() -> std::string;
 };
+
+auto coinflip() -> bool;
