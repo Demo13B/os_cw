@@ -11,4 +11,5 @@ auto main() -> int {
     std::pair<int, int> p = db.findEntry("Dac");
     std::cout << p.first << " " << p.second << std::endl;
     db.updateEntry("Dac", {p.first + 1, p.second + 1});
+    db.syncData();
 }
