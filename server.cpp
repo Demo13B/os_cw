@@ -10,7 +10,7 @@ auto main() -> int {
     sem_t* server_sem = sem_open("server_sem", O_CREAT, 0777, 0);
 
     MQ mq = MQ("toserver.dat", "fromserver.dat");
-    Db db = Db("../database.dat");
+    Db db = Db("/Users/timursalihov/OperatingSystems/CW/database.dat");
 
     std::string name;
     std::cout << "Enter your nickname: ";
